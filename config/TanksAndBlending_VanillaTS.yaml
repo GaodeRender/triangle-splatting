@@ -1,0 +1,177 @@
+lr_delay_steps: &LR_DELAY_STEPS 2_000
+lr_delay_mult: &LR_DELAY_MULT 0.1
+lr_max_steps: &LR_MAX_STEPS 30_000
+total_iter: &TOTAL_ITER 30_000
+
+dataset:
+    type: "Colmap"
+    local_dir: null
+    scene_id: null
+    background: null
+    use_alpha_mask: False
+    num_workers: 10
+
+    pcd_path: "sparse/0/point_cloud.ply"
+    train_target_res: null
+    test_target_res: null
+    hold_test_set: True
+    hold_interval: 8
+
+model:
+    max_sh_degree: 3
+    use_color_affine: False
+    back_culling: False
+    rasterizer_type: "2D"
+
+    sampling:
+        sample_method: "direct" # "random" | "grid" | "direct"
+        n_sample_inside: null
+        n_sample_outside: null
+        grid_size_inside: null
+        grid_size_outside: null
+        init_opacity: 0.1 # float | "random"
+
+    optimizer:
+        vertex:
+            v_init: 0.00016
+            v_final: 0.000016
+            delay_steps: *LR_DELAY_STEPS
+            delay_mult: *LR_DELAY_MULT
+            max_steps: *LR_MAX_STEPS
+        vertex_scale_up_iter: null
+        vertex_scale_up: null
+
+        opacity:
+            v_init: 0.025
+            v_final: 0.001
+            delay_steps: *LR_DELAY_STEPS
+            delay_mult: *LR_DELAY_MULT
+            max_steps: *LR_MAX_STEPS
+
+        f_dc:
+            v_init: 0.0025
+            v_final: 0.0005
+            delay_steps: *LR_DELAY_STEPS
+            delay_mult: *LR_DELAY_MULT
+            max_steps: *LR_MAX_STEPS
+
+        f_rest:
+            v_init: 0.0002
+            v_final: 0.0002
+            delay_steps: *LR_DELAY_STEPS
+            delay_mult: *LR_DELAY_MULT
+            max_steps: *LR_MAX_STEPS
+
+        color_affine:
+            v_init: 0.001
+            v_final: 0.0001
+            delay_steps: *LR_DELAY_STEPS
+            delay_mult: *LR_DELAY_MULT
+            max_steps: *LR_MAX_STEPS
+
+    model_update:
+        # statistic:
+        #     start_iter: 2000
+        #     end_iter: *TOTAL_ITER
+
+        # densification:
+        #     start_iter: 0
+        #     end_iter: 0
+        #     interval_iter: 3000
+        #     grad_threshold_init: 0.0006
+        #     grad_threshold_final: 0.0003
+        #     min_view_count: 300
+        #     split_scale_threshold: 10 # unit: m, proportional to scene extent
+        #     split_num: 2
+
+        # opacity_pruning:
+        #     start_iter: 6_000
+        #     end_iter: 80_000
+        #     hold_iter: *TOTAL_ITER
+        #     interval_iter: 200
+        #     opacity_threshold_init: 0.005
+        #     opacity_threshold_final: 0.5
+
+        # opacity_clipping: # clip opacity above threshold to 1.0
+        #     start_iter: 40_000
+        #     end_iter: 80_000
+        #     hold_iter: *TOTAL_ITER
+        #     interval_iter: 200
+        #     opacity_threshold_init: 1.0
+        #     opacity_threshold_final: 0.5
+
+        # scale_pruning:
+        #     start_iter: 2000
+        #     end_iter: 20_000
+        #     interval_iter: 200
+        #     radii_threshold: 200 # unit: pixel, proportional to render resolution
+        #     scale_threshold: 20 # unit: m, proportional to scene extent
+
+        # scale_clipping: # clip scale above scale_max to scale_max
+        #     start_iter: 2000
+        #     end_iter: 40_000
+        #     hold_iter: *TOTAL_ITER
+        #     interval_iter: 200
+        #     scale_max_init: 100
+        #     scale_max_final: 20
+
+        # opacity_reset:
+        #     start_iter: 0
+        #     end_iter: 0
+        #     interval_iter: 3000
+        #     reset_value: 0.1
+
+        # gamma_schedule:
+        #     start_iter: 40000
+        #     end_iter: 80000
+        #     gamma_init: 1.0
+        #     gamma_final: 10.0
+
+        sh_schedule:
+            one_up_iters: [4000, 10000, 16000]
+
+trainer:
+    output_dir: "outputs/TanksAndBlending/VanillaTS"
+    clean_output_dir: False # clean output_dir before training
+    detect_anomaly: False
+    seed: null
+    use_tensorboard: True
+
+    start_checkpoint: null
+    start_pointcloud: null
+    initial_eval: True
+    iterations: *TOTAL_ITER
+    log_interval_iter: 50
+    eval_interval_iter: 2_000
+    histogram_interval_iter: 5_000
+    save_interval_iter: 0
+    ckpt_interval_iter: 0
+    save_iterations: [*TOTAL_ITER]
+    checkpoint_iterations: [*TOTAL_ITER]
+    save_glb_iterations: []
+
+    train_background: "random" # "white" | "black" | "random"
+    eval_background: "black" # "white" | "black" | "random"
+
+    w_opacity_reg:
+        quad_reg: 0.0
+        linear_reg: 0.0
+        quad_start_iter: 0
+        linear_start_iter: 0
+    w_scaling_reg: 0.0
+    vertex_reg:
+        w_vertex_reg: 0.0
+        start_iter: 0
+        interval_iter: 10
+
+    w_affine_reg: 0.0
+    w_ssim: 0.2
+    w_dog: 0.0
+    w_smoothness: 0.0
+    geometry_loss:
+        w_geometry: 0.0
+        scale_factor: 0.5
+        start_iter: 15_000
+
+    eval_save_img_count: 3
+    histogram_sample_num: 10_000

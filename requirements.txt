@@ -1,0 +1,19 @@
+# kaolin==0.17.0
+matplotlib==3.10.3
+numpy==2.3.0
+opencv_python==4.11.0.86
+oss2==2.19.1
+Pillow==11.2.1
+plyfile==1.1.2
+PyYAML==6.0.2
+scipy==1.15.3
+setuptools==78.1.1
+Shapely==2.1.1
+torch==2.5.1
+torchvision==0.20.1
+torch_scatter==2.1.2
+torchmetrics==1.7.1
+tqdm==4.67.1
+trimesh==4.6.8
+viser==0.2.23
+tensorboard==2.19.0
