@@ -1,5 +1,12 @@
+<div align="center">
+
 # 2D Triangle Splatting for Direct Differentiable Mesh Training
+
+[Arxiv][1]
+
 Kaifeng Sheng*, Zheng Zhou*, Yingliang Peng, Qianwei Wang (*Equal Contribution)
+
+</div>
 
 ## - Project Overview
 
