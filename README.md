@@ -99,7 +99,22 @@ This repository contains code under **two different licenses**:
 
 Please make sure to comply with both licenses when using this repository.
 
+## - Citation
+
+If you find our work useful, please consider citing our paper:
+```bibtex
+@misc{sheng20252dtrianglesplattingdirect,
+      title={2D Triangle Splatting for Direct Differentiable Mesh Training}, 
+      author={Kaifeng Sheng and Zheng Zhou and Yingliang Peng and Qianwei Wang},
+      year={2025},
+      eprint={2506.18575},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2506.18575}, 
+}
+```
+
 <!-- Reference -->
-[1]: https://
+[1]: https://arxiv.org/abs/2506.18575
 [2]: https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/
 [3]: https://github.com/nerfstudio-project/viser
