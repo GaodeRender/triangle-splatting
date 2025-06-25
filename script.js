@@ -323,14 +323,14 @@ async function loadMeshForViewer(sceneName, selectedMesh) {
   const viewer = viewers[sceneName];
   const meshUrl = `assets/${sceneName}/${selectedMesh}`;
 
-  if (viewer.currentMesh) viewer.scene.remove(viewer.currentMesh);
-  if (viewer.wireframeMesh) {
-    viewer.scene.remove(viewer.wireframeMesh);
-    viewer.wireframeMesh = null;
-  }
-
   try {
     viewer.currentMesh = await loadMeshFromFile(meshUrl);
+    // First, remove any existing mesh
+    if (viewer.currentMesh) viewer.scene.remove(viewer.currentMesh);
+    if (viewer.wireframeMesh) {
+      viewer.scene.remove(viewer.wireframeMesh);
+      viewer.wireframeMesh = null;
+    }
     viewer.scene.add(viewer.currentMesh);
 
     // Update face count display
