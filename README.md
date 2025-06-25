@@ -127,4 +127,4 @@ If you find our work useful, please consider citing our paper:
 [1]: https://arxiv.org/abs/2506.18575
 [2]: https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/
 [3]: https://github.com/nerfstudio-project/viser
-[4]: https://gaoderender.github.io/diff_recon/
+[4]: https://gaoderender.github.io/triangle-splatting/
