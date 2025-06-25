@@ -325,12 +325,15 @@ async function loadMeshForViewer(sceneName, selectedMesh) {
 
   try {
     const newMesh = await loadMeshFromFile(meshUrl);
-    // First, remove any existing mesh
-    if (viewer.currentMesh) viewer.scene.remove(viewer.currentMesh);
-    if (viewer.wireframeMesh) {
-      viewer.scene.remove(viewer.wireframeMesh);
-      viewer.wireframeMesh = null;
-    }
+    // Remove all meshes from the scene
+    viewer.scene.children.forEach(child => {
+      if (child instanceof THREE.Mesh || child instanceof Line2) {
+        viewer.scene.remove(child);
+      }
+    });
+    viewer.currentMesh = null;
+    viewer.wireframeMesh = null;
+    
     viewer.currentMesh = newMesh;
     viewer.scene.add(viewer.currentMesh);
 
