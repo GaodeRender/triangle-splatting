@@ -9,6 +9,13 @@ h1 {
   text-align: center;
 }
 
+.divider {
+  border: none;
+  height: 1px;
+  background: #ddd;
+  margin: 30px 0;
+}
+
 .author {
   text-align: center;
   color: #666;
@@ -128,7 +135,6 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: center;
   margin-bottom: 0;
-  /* padding: 8px; */
   background: white;
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -257,7 +263,7 @@ input[type="checkbox"] {
   font-weight: 500;
 }
 
-.methods a:hover {
+.methods a:hover, .interactive-viewer a:hover {
   color: #005a9e;
   text-decoration: underline;
 }
@@ -362,16 +368,12 @@ input[type="checkbox"] {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .features-grid, .methods-grid, .tech-grid {
+  .features-grid, .tech-grid {
     grid-template-columns: 1fr;
   }
   
-  .abstract, .features, .methods, .usage {
+  .abstract, .features, .methods, .interactive-viewer, .references {
     padding: 0 15px;
-  }
-  
-  .abstract, .usage-steps {
-    padding: 20px;
   }
   
   .footer {
