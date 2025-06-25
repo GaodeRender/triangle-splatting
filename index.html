@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Triangle Splatting</title>
+    <script type="module" src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <h1>2D Triangle Splatting for Direct Differentiable Mesh Training</h1>
+    <p class="author">
+      <a href="https://scholar.google.com/citations?hl=en&user=YoVvifUAAAAJ"
+        >Kaifeng Sheng</a
+      >*, Zheng Zhou*, Yingliang Peng, Qianwei Wang
+    </p>
+    <p class="author">*Equal Contribution</p>
+    <p class="author">Amap, Alibaba</p>
+
+    <div class="button-wrapper">
+      <div class="button-container">
+        <a class="button-pill" href="https://github.com/GaodeRender/diff_recon">
+          <!-- GitHub icon -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-github-icon lucide-github"
+          >
+            <path
+              d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+            />
+            <path d="M9 18c-4.51 2-5-2-7-2" />
+          </svg>
+          Code
+        </a>
+        <a class="button-pill" href="https://arxiv.org/abs/2506.18575">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-file-icon lucide-file"
+          >
+            <path
+              d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+            />
+            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+          </svg>
+          Paper
+        </a>
+      </div>
+    </div>
+    <hr class="divider" />
+
+    <section class="interactive-viewer">
+      <h2>Interactive Viewer</h2>
+      <p>
+        Explore the mesh reconstructed by 2D Triangle Splatting (2DTS) method on
+        the Nerf-Synthetic dataset and compare it with other reconstruction
+        methods like 2D Gaussian Splatting (2DGS) <a href="#ref3">[3]</a> and
+        Nvdiffrec <a href="#ref4">[4]</a>.
+        <br />
+        Use the controls below to switch among different methods and rendering
+        options.
+      </p>
+      <div class="viewer-container">
+        <div class="viewer-section" data-scene="ship">
+          <h3>Ship</h3>
+          <div class="viewer-controls"></div>
+          <div class="viewer"></div>
+        </div>
+        <div class="viewer-section" data-scene="ficus">
+          <h3>Ficus</h3>
+          <div class="viewer-controls"></div>
+          <div class="viewer"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="abstract">
+      <h2>Abstract</h2>
+      <p>
+        Differentiable rendering with 3D Gaussian primitives has emerged as a
+        powerful method for reconstructing high-fidelity 3D scenes from
+        multi-view images. While it offers improvements over NeRF-based methods,
+        this representation still encounters challenges with rendering speed and
+        advanced rendering effects, such as relighting and shadow rendering,
+        compared to mesh-based models. In this paper, we propose 2D Triangle
+        Splatting (2DTS), a novel method that replaces 3D Gaussian primitives
+        with 2D triangle facelets. This representation naturally forms a
+        discrete mesh-like structure while retaining the benefits of continuous
+        volumetric modeling. By incorporating a compactness parameter into the
+        triangle primitives, we enable direct training of photorealistic meshes.
+        Our experimental results demonstrate that our triangle-based method, in
+        its vanilla version (without compactness tuning), achieves higher
+        fidelity compared to state-of-the-art Gaussian-based methods.
+        Furthermore, our approach produces reconstructed meshes with superior
+        visual quality compared to existing mesh reconstruction methods.
+      </p>
+    </section>
+
+    <section class="features">
+      <h2>Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>🔄 Fast Training</h3>
+          <p>
+            Train colored meshes end-to-end with speeds matching
+            state-of-the-art Gaussian-based methods
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>⚙️ Efficient Representation</h3>
+          <p>
+            Scales to large scenes with thousands of images where traditional
+            mesh reconstruction methods fail
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>🎮 Interactive 3D Viewer</h3>
+          <p>
+            Explore reconstructed triangle splats and meshes with intuitive
+            controls and fluid navigation
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>📁 Seamless Integration</h3>
+          <p>
+            Export results in GLB and PLY formats for direct integration with
+            modern game engines
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="methods">
+      <h2>Methods</h2>
+      <p>
+        2D Triangle Splatting (2DTS) replaces the Gaussian primitives from 3DGS
+        <a href="#ref1">[1]</a> with triangle primitives and combines the
+        compactness parameter from GES <a href="#ref2">[2]</a> to approximate a
+        solid mesh representation. The triangle primitives are rendered using
+        the splatting and alpha-blending methods introduced in 3DGS. To enable
+        the gradient back-propagation through the rendering process, we use a
+        decaying opacity function based on the barycentric coordinates of each
+        point on the triangle plane. The depth and normal of each primitive can
+        be calculated naturally from the normal of the triangle plane and the
+        depth of the triangle vertices. A normal consistency loss similar to the
+        one used in 2DGS <a href="#ref3">[3]</a> is applied to constrain the
+        rendered normals and depth image.
+      </p>
+      <div class="method-image-container">
+        <figure>
+          <img
+            src="assets/triangle_splatting.png"
+            alt="Triangle Splatting Method Overview"
+            class="method-image"
+          />
+          <figcaption>
+            Figure 1: Overview of the 2D Triangle Splatting approach. Our method
+            represents the 3D scene with 2D triangle facelets and uses a
+            compactness parameter γ to control the sharpness of the triangle
+            edges. This method creates a discrete mesh-like structure while
+            maintaining the benefits of continuous volumetric modeling.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="references">
+      <h2>References</h2>
+      <ol class="reference-list">
+        <li id="ref1">
+          Bernhard Kerbl, Georgios Kopanas, Thomas Leimkuhler, and George
+          Drettakis. 3D gaussian splatting for real-time radiance field
+          rendering. ACM Transactions on Graphics, 42 (4), 2023.
+        </li>
+        <li id="ref2">
+          Abdullah Hamdi, Luke Melas-Kyriazi, Jinjie Mai, Guocheng Qian, Ruoshi
+          Liu, Carl Vondrick, Bernard Ghanem, and Andrea Vedaldi. GES:
+          Generalized exponential splatting for efficient radiance field
+          rendering. In Proceedings of the IEEE/CVF Conference on Computer
+          Vision and Pattern Recognition (CVPR), pages 19812-19822, 2024.
+        </li>
+        <li id="ref3">
+          Binbin Huang, Zehao Yu, Anpei Chen, Andreas Geiger, and Shenghua Gao.
+          2D gaussian splatting for geometrically accurate radiance fields. In
+          SIGGRAPH 2024 Conference Papers. Association for Computing Machinery,
+          2024.
+        </li>
+        <li id="ref4">
+          Jacob Munkberg, Jon Hasselgren, Tianchang Shen, Jun Gao, Wenzheng
+          Chen, Alex Evans, Thomas Muller, and Sanja Fidler. Extracting
+          Triangular 3D Models, Materials, and Lighting From Images. In
+          Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern
+          Recognition (CVPR), pages 8280-8290, 2022.
+        </li>
+      </ol>
+    </section>
+
+    <footer class="footer">
+      <section class="citation">
+        <h3>Citation</h3>
+        <p>If you use this work in your research, please cite:</p>
+        <pre class="citation-block"><code>
+          @misc{sheng20252dtrianglesplattingdirect,
+                title={2D Triangle Splatting for Direct Differentiable Mesh Training}, 
+                author={Kaifeng Sheng and Zheng Zhou and Yingliang Peng and Qianwei Wang},
+                year={2025},
+                eprint={2506.18575},
+                archivePrefix={arXiv},
+                primaryClass={cs.CV},
+                url={https://arxiv.org/abs/2506.18575}}
+        </code></pre>
+      </section>
+
+      <!-- <section class="technical-info">
+        <h3>Technical Details</h3>
+        <div class="tech-grid">
+          <div class="tech-item"><strong>Datasets:</strong> Nerf-Synthetic</div>
+          <div class="tech-item"><strong>Technology:</strong> Three.js</div>
+          <div class="tech-item">
+            <strong>Organization:</strong> Amap, Alibaba
+          </div>
+        </div>
+      </section> -->
+    </footer>
+  </body>
+</html>
