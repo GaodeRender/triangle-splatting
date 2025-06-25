@@ -5,4 +5,4 @@ outputs/
 *temp/
 **.egg-info/
 build/
-scripts/eval_dtu/__pycache__
+**.DS_Store

@@ -2,9 +2,10 @@
 
 # 2D Triangle Splatting for Direct Differentiable Mesh Training
 
-[Arxiv][1]
+[Arxiv][1] | [Project Page][4]
 
 Kaifeng Sheng*, Zheng Zhou*, Yingliang Peng, Qianwei Wang (*Equal Contribution)
+Amap, Alibaba Group
 
 </div>
 
@@ -125,3 +126,4 @@ If you find our work useful, please consider citing our paper:
 [1]: https://arxiv.org/abs/2506.18575
 [2]: https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/
 [3]: https://github.com/nerfstudio-project/viser
+[4]: https://gaoderender.github.io/diff_recon/
