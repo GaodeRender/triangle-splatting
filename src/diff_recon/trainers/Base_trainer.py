@@ -11,7 +11,7 @@ from ..utils.logger import Logger
 
 class BaseTrainer(abc.ABC):
     def __init__(self, config: str | Config = None, exp_name: str = None, device: torch.device | int = None, log_file: bool = True) -> None:
-        time_str = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
+        time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
         default_config = Config(trainer=Config(), dataset=Config(), model=Config())
         self.config = config if isinstance(config, Config) else loadConfig(config) if config is not None else default_config
         self.exp_name = time_str if not exp_name else exp_name
