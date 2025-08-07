@@ -37,7 +37,7 @@ Furthermore, our approach produces reconstructed meshes with superior visual qua
 ## - Installation
 
 1. Install CUDA 12.4 or higher (remember to set the environment variable `CUDA_HOME` to the CUDA installation path);
-2. Clone the repository: `git clone https://github.com/GaodeRender/diff_recon.git; cd diff_recon`;
+2. Clone the repository: `git clone https://github.com/GaodeRender/triangle-splatting.git; cd triangle-splatting`;
 3. Create new conda environment with Python 3.12: `conda create -n 2dts python=3.12`;
    Activate the environment: `conda activate 2dts`;
 4. Install dependencies: `pip install -r requirements.txt --no-cache-dir`;
